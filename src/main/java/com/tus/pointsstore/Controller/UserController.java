@@ -116,12 +116,20 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable int id) {
 //        if (userMapper.findById(id).isEmpty()) {
 //            throw new NotFoundException("Patient with ID " + patientId + " does not exist.");
 //        }
-        userMapper.deleteById(id);
-        return new ResponseEntity<>("User with id " + id + " deleted", HttpStatus.OK);
+        Map<String, Object> map = new HashMap<>();
+        int res = userMapper.deleteById(id);
+        if (res > 0) {
+            map.put("state", true);
+            map.put("msg", "Successful");// back token
+        } else {
+            map.put("state", false);
+            map.put("msg", "unknow error");
+        }
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
 
     }
 
