@@ -14,7 +14,7 @@
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+
 </head>
 
 <body>
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="table-responsive">
-            <table class="table table-striped table-hover" id="tb_user" >
+            <table class="table table-striped table-hover" id="tb_user">
               <thead class="thead-dark">
                 <tr>
                   <th>Name</th>
@@ -60,7 +60,77 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
     crossorigin="anonymous"></script>
+  <script>
+    QueryList();
+    function QueryList() {
+      var url = "../js/config.json";
+      $.getJSON(url, function (data) {
+        var host = data.host;
+        fetch(host + "/AllUsers", {
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            mydata = json;
+            $("#rows").empty();
+            for (var i = 0; i < mydata.length; i++) {
+              var $trTemp = $(
+                "<tr data-index=" +
+                i +
+                " data-row-id=" +
+                mydata[i].user_email +
+                "></tr>"
+              );
+              $trTemp.append("<td>" + mydata[i].user_name + "</td>");
+              $trTemp.append("<td>" + mydata[i].user_email + "</td>");
+              $trTemp.append("<td>" + mydata[i].user_phone + "</td>");
+              $trTemp.append("<td>" + mydata[i].user_password + "</td>");
+              $trTemp.append("<td>" + mydata[i].user_role + "</td>");
+              $trTemp.append(
+                "<td> <button type='button' class = 'btn btn-success' onclick='doEdit(this)'> Edit </button> " +
+                "<button type = 'button' class = 'btn btn-danger' onclick='doDelete(this)'> Delete </button>  </td>"
+              );
+              $trTemp.appendTo("#tb_user");
+            }
+          });
+      });
+    }
 
+    function doAdd() {
+            window.location.href = "useredit.html";
+        }
+
+        function doEdit(e) {
+            var table = $("#tb_user").DataTable();
+            var selectRow = table.row($(e).parents("tr").data("index")).data();
+            var data = {
+                user_name: selectRow[0],
+                user_email: selectRow[1],
+                user_phone: selectRow[2],
+                user_password: selectRow[3],
+                user_role: selectRow[4],
+                user_status: selectRow[5],
+            };
+            console.log(generateUrlWithParams("userEdit.html", data));
+            window.location.href = generateUrlWithParams("userEdit.html", data);
+        }
+
+        function generateUrlWithParams(url, params) {
+            var urlParams = [];
+            for (var key in params) {
+                if (params[key]) {
+                    urlParams.push(`${key}=${params[key]}`);
+                }
+            }
+            url += "?" + urlParams.join("&");
+            return url;
+        }
+
+        function doDelete(e) {
+            $(e).parents("tr").remove();
+            console.log($(e).parents("tr").data("row-id"));
+        }
+  </script>
 </body>
 
 </html>

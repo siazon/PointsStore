@@ -106,6 +106,7 @@ public class UserController {
             map.put("token", token);
             map.put("role", userDB.getUser_role());
             map.put("points", userDB.getpoints());
+            map.put("user_id", userDB.getId());
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } else {
             map.put("state", true);

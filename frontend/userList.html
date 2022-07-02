@@ -107,7 +107,7 @@
         }
 
         function doAdd() {
-            window.location.href = "userEdit.html";
+            window.location.href = "../userEdit.html";
         }
 
         function doEdit(e) {
@@ -121,7 +121,7 @@
                 user_role: selectRow[4],
                 user_status: selectRow[5],
             };
-            console.log(generateUrlWithParams("userEdit.html", data));
+            console.log(generateUrlWithParams("../userEdit.html", data));
             window.location.href = generateUrlWithParams("userEdit.html", data);
         }
 

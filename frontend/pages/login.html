@@ -194,6 +194,7 @@
                 localStorage.setItem("role", json.role);
                 localStorage.setItem("points", json.points);
                 localStorage.setItem("username", username);
+                localStorage.setItem("user_id", json.user_id);
                 var data = { type: 'login',role:json.role }
                 window.parent.postMessage(data, '*');
                 if (username.indexOf("garbagesorting") != -1) {

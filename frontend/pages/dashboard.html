@@ -40,6 +40,10 @@
       margin-top: 10px;
       color: #22a4f1;
     }
+
+    td p {
+      margin: 0 20px;
+    }
   </style>
 </head>
 
@@ -52,7 +56,7 @@
             <div class="card-body p-2">
 
               <div class="row">
-                <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
+                <div class="col-md-6 col-lg-4 col-xl-2 mb-4 mb-md-0">
                   <div class="d-flex flex-row pb-3">
                     <div class="d-flex align-items-center pe-2">
                       <p class="mb-2" style="font-weight:bold">Summary</p>
@@ -60,38 +64,41 @@
                   </div>
                 </div>
 
-                <div class="col-md-6 col-lg-4 col-xl-6">
+                <div class="col-md-6 col-lg-4 col-xl-4">
                   <div class="d-flex justify-content-between" style="font-weight: 500;">
-                    <p id="txtEmail" class="mb-2"></p>
+                    <p id="txtEmail" class="mb-4"></p>
                   </div>
                 </div>
-
+                <div class="col-md-6 col-lg-4 col-xl-3">
+                  <div class="d-flex justify-content-between" style="font-weight: 500;">
+                 
+                    <p id="efe" class="mb-2">History: <a id="txtHisQty"></a></p>
+                  </div>
+                </div>
                 <div class="col-lg-4 col-xl-3">
                   <div class="d-flex justify-content-between" style="font-weight: 500;">
-                    <p class="mb-2">Points Left:</p>
-                    <p id="txtPoints" class="mb-2">2349</p>
+                    <p class="mb-2">Points Left: <a id="txtPoints"></a></p>
+                    <!-- <p id="txtPoints" class="mb-2">2349</p> -->
                   </div>
-
                 </div>
-
               </div>
-
             </div>
           </div>
           <br>
           <br>
           <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover table-striped">
               <thead>
                 <tr>
-                  <th scope="col" class="h5">Exchange History</th>
-                  <th scope="col">Format</th>
-                  <th scope="col">Quantity</th>
-                  <th scope="col">Price</th>
-                  <th scope="col">Price</th>
+                  <th scope="col" class="h3">Exchange History</th>
+                  <th scope="col" style="padding:0 20px">Quantity</th>
+                  <th scope="col" style="padding:0 20px">Amount</th>
+                  <th scope="col" style="padding:0 20px">Delivery</th>
+                  <th scope="col" style="padding:0 20px">Address</th>
+                  <th scope="col" style="padding:0 20px">Time</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="tbInfos">
                 <tr>
                   <th scope="row">
                     <div class="d-flex align-items-center">
@@ -103,37 +110,21 @@
                     </div>
                   </th>
                   <td class="align-middle">
-                    <p class="mb-0" style="font-weight: 500;">Digital</p>
+                    <p class="mb-0" style="font-weight: 500;">8</p>
                   </td>
                   <td class="align-middle">
-                    <div class="d-flex flex-row">
-                      <button class="btn btn-link px-2"
-                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
-                        <i class="fas fa-minus"></i>
-                      </button>
-
-                      <input id="form1" min="0" name="quantity" value="2" type="number"
-                        class="form-control form-control-sm" style="width: 50px;" />
-
-                      <button class="btn btn-link px-2"
-                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
-                        <i class="fas fa-plus"></i>
-                      </button>
-                    </div>
+                    <p class="mb-0" style="font-weight: 500;">88</p>
                   </td>
                   <td class="align-middle">
-                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                    <p class="mb-0" style="font-weight: 500;">delivery $5</p>
                   </td>
                   <td class="align-middle">
-                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                    <p class="mb-0" style="font-weight: 500;">101 Willow Park</p>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-
-
-
         </div>
       </div>
     </div>
@@ -157,7 +148,7 @@
       var _this = this;
       $.getJSON(url, function (data) {
         host = data.host;
-        var formData={email:userName};
+        var formData = { email: userName };
         fetch(host + "/GetExInfo", {
           method: "POST",
           headers: {
@@ -171,11 +162,36 @@
           .then((response) => response.json())
           .then((json) => {
             console.log(json)
+            $("#txtHisQty").text(json.length)
+            refreshList(json)
           });
       });
     }
-    function refreshList(infos){
-
+    function refreshList(infos) {
+      $("#tbInfos").empty();
+      for (var i = 0; i < infos.length; i++) {
+        var $trTemp = $(
+          "<tr><th scope='row'>" +
+          "<div class='d-flex align-items-center'>" +
+          "<img src='../img/" + infos[i].pic + "' class='img-fluid rounded-3' style='width: 120px;' alt='Book'>" +
+          "<div class='flex-column ms-4'>" +
+          "<p class='mb-2'>"+infos[i].name+"</p>" +
+          "<p class='mb-0'>"+infos[i].info+"</p>" +
+          "</div> </div></th>" +
+          "<td class='align-middle'>" +
+          " <p class='mb-0' style='font-weight: 500;'>"+infos[i].qty+"</p>" +
+          "  </td><td class='align-middle'>" +
+          "<p class='mb-0' style='font-weight: 500;'>"+infos[i].amount+"</p>" +
+          " </td><td class='align-middle'>" +
+          " <p class='mb-0' style='font-weight: 500;'>"+infos[i].delivery+"</p>" +
+          " </td><td class='align-middle'>" +
+          "<p class='mb-0' style='font-weight: 500;'>"+infos[i].address+"</p>" +
+          " </td><td class='align-middle'>" +
+          "<p class='mb-0' style='font-weight: 500;'>"+infos[i].time+"</p>" +
+          " </td></tr>"
+        );
+        $trTemp.appendTo("#tbInfos");
+      }
     }
 
 
