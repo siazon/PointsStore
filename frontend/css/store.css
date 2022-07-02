@@ -1,0 +1,71 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.btncart {
+    position: fixed;
+    top: 350px;
+    right: 0px;
+    height: 90px;
+    width: 90px;
+    background-image: url(../img/cart.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-origin: content-box;
+    margin-bottom: 20px;
+    margin-right: 20px;
+    font-size: 30px;
+    text-align: center;
+    border: solid #e0e0e0 1px;
+    border-radius: 15px;
+    box-shadow: 7px 7px 7px 0 gray;
+    padding: 5px;
+    cursor: pointer;
+    z-index: 10;
+}
+
+.btncart div {
+    margin-top: 10px;
+    color: #22a4f1;
+}
+
+#sidebar {
+    top: 70px;
+    position: fixed;
+    height: 100%;
+    width: 800px;
+    right: -800px;
+    background: white;
+    z-index: 9;
+    opacity: 0.97;
+}
+
+@media (min-width: 1025px) {
+    .h-custom {
+        height: 100vh !important;
+    }
+}
+
+
+table.tableSection {
+    display: table;
+    width: 100%;
+}
+table.tableSection thead, table.tableSection tbody {
+    float: left;
+    width: 100%;
+}
+table.tableSection tbody {
+    overflow: auto;
+    height: 150px;
+}
+table.tableSection tr {
+    width: 100%;
+    display: table;
+    text-align: left;
+}
+table.tableSection th, table.tableSection td {
+    width: 33%;
+}

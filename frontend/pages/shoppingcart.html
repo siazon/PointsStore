@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" style="">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Home</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    .btncart {
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      height: 90px;
+      width: 90px;
+      background-image: url(./img/cart.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-origin: content-box;
+      margin-bottom: 20px;
+      margin-right: 20px;
+      font-size: 30px;
+      text-align: center;
+      border: solid #e0e0e0 1px;
+      border-radius: 15px;
+      box-shadow: 7px 7px 7px 0 gray;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .btncart div {
+      margin-top: 10px;
+      color: #22a4f1;
+    }
+
+    #btnDoExchange {
+      margin: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="h-100 h-custom" style="background-color: #fff">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+            <div class="card-body p-0">
+              <div class="row g-0">
+                <div class="col-lg-8">
+                  <div id="tableLine" class="p-5">
+
+                    <!-- <div class="d-flex justify-content-between align-items-center mb-5">
+                      <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                      <h6 class="mb-0 text-muted">3 items</h6>
+                    </div>
+                    <hr id="tableLine" class="my-4">
+
+                    <div class="row mb-4 d-flex justify-content-between align-items-center">
+                      <div class="col-md-2 col-lg-2 col-xl-2">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img5.webp"
+                          class="img-fluid rounded-3" alt="Cotton T-shirt">
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-3">
+                        <h6 class="text-muted">Shirt</h6>
+                        <h6 class="text-black mb-0">Cotton T-shirt</h6>
+                      </div>
+                      <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                          <i class="fas fa-minus"></i>
+                        </button>
+
+                        <input id="form1" min="0" name="quantity" value="1" type="number"
+                          class="form-control form-control-sm" />
+
+                        <button class="btn btn-link px-2"
+                          onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                          <i class="fas fa-plus"></i>
+                        </button>
+                      </div>
+                      <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                        <h6 class="mb-0">€ 44.00</h6>
+                      </div>
+                      <div class="col-md-1 col-lg-1 col-xl-2 text-end">
+                        <a href="#!" class="text-muted"><i class="fas fa-times">delete</i></a>
+                      </div>
+                    </div>
+                    <hr class="my-4"> -->
+
+
+                  </div>
+                </div>
+                <div class="col-lg-4 bg-grey">
+                  <div class="p-5">
+                    <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between mb-4">
+                      <h5 class="text-uppercase">items: <a id="aItem">0</a></h5>
+                      <h5></h5>
+                    </div>
+
+                    <h5 class="text-uppercase mb-3">Delivery:</h5>
+
+                    <div class="mb-4 pb-2">
+                      <select id="txtDelivery" class="select">
+                        <option value="1">Standard-Delivery- €5.00</option>
+                        <option value="2">Self pick-up</option>
+                      </select>
+                    </div>
+
+                    <h5 class="text-uppercase mb-3">Address:</h5>
+
+                    <div class="mb-5">
+                      <div class="form-outline">
+                        <input type="text" id="txtaddress" class="form-control form-control-lg" />
+                        <label class="form-label" for="txtaddress">Enter your address</label>
+                      </div>
+                    </div>
+
+                    <hr class="my-4">
+
+                    <div class="d-flex justify-content-between mb-5">
+                      <h5 class="text-uppercase">Total price:</h5>
+                      <h5 id="totalPrice">0</h5>
+                    </div>
+
+                    <button id="btnDoExchange" type="button" class="btn btn-dark btn-block btn-lg"
+                      data-mdb-ripple-color="dark">Exchange</button>
+                    <button type="button" class="btn btn-outline-dark btn-block btn-lg" data-mdb-ripple-color="dark"
+                      onclick="window.history.back()">Back to shop</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div style="height: 70px; "></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+  <script>
+    window.onload = function () {
+      refreshData();
+      $("#btnDoExchange").click(function () {
+        doExchange()
+      })
+    };
+    function refreshData() {
+      $("#tableLine").empty();
+      var giftsInCart = JSON.parse(localStorage.getItem("giftsInCart"));
+      console.log(giftsInCart)
+      let len = 0;
+      if (giftsInCart != null) len = giftsInCart.length;
+      $("#aItem").text(len);
+      var $title = $(
+        " <div class='d-flex justify-content-between align-items-center mb-5'>" +
+        "<h1 class='fw-bold mb-0 text-black'>Shopping Cart</h1>" +
+        "<h6 class='mb-0 text-muted'>" + len + " items</h6>" +
+        "</div>" +
+        "<hr class='my-4'>"
+      );
+      $title.appendTo("#tableLine");
+      let totalPrice = 0;
+      for (var i = 0; i < giftsInCart.length; i++) {
+        totalPrice += giftsInCart[i].amount;
+        var $trTemp = $(
+          "<div class='row mb-4 d-flex justify-content-between align-items-center'>" +
+          "<div class='col-md-2 col-lg-2 col-xl-2'>" +
+          "<img src='../img/" + giftsInCart[i].pic + "' class='img-fluid rounded-3' alt='Cotton T-shirt'>" +
+          "</div> <div class='col-md-3 col-lg-3 col-xl-3'>" +
+          " <h6 class='text-muted'>Gift</h6>" +
+          " <h6 class='text-black mb-0'>" + giftsInCart[i].info + "</h6>" +
+          " </div>  <div class='col-md-3 col-lg-3 col-xl-2 d-flex'>" +
+          " <button class='btn btn-link px-2'  onclick='this.parentNode.querySelector('input[type=number]').stepDown()'>" +
+          "  <i class='fas fa-minus'></i>" +
+          " </button> <input id='form1' min='0' name='quantity' value='" + giftsInCart[i].qty + "' type='number'  class='form-control form-control-sm' />" +
+          " <button class='btn btn-link px-2'   onclick='this.parentNode.querySelector('input[type=number]').stepUp()'>" +
+          "  <i class='fas fa-plus'></i>" +
+          "  </button>  </div>" +
+          " <div class='col-md-3 col-lg-2 col-xl-2 offset-lg-1'>" +
+          "  <h6 class='mb-0'>" + giftsInCart[i].amount + "</h6>" +
+          "  </div><div class='col-md-1 col-lg-1 col-xl-2 text-end'>" +
+          " <a href='#!' class='text-muted' data-gift='" + giftsInCart[i].id + "' onclick='doDelete(this);'><i class='fas fa-times'>delete</i></a>" +
+          " </div>  </div> <hr class='my-4'>"
+        );
+        //$("#tableLine").append($trTemp);
+        $trTemp.appendTo("#tableLine");
+      }
+      $("#totalPrice").text(totalPrice);
+      var h = document.body.scrollHeight;
+      var data = { type: 'height', h: h, }
+      window.parent.postMessage(data, "http://127.0.0.1:5501");
+    }
+    function doDelete(e) {
+      let gift_id = $(e).data('gift');
+      var giftsInCart = JSON.parse(localStorage.getItem("giftsInCart"));
+      let obj = giftsInCart.findIndex(item => {
+        if (item.id == gift_id)
+          return item;
+      });
+      giftsInCart.splice(obj, 1)
+      localStorage.setItem("giftsInCart", JSON.stringify(giftsInCart));
+      refreshData();
+      var data = { type: 'cart', data: JSON.parse(localStorage.getItem("giftsInCart")), }
+      window.parent.postMessage(data, "http://127.0.0.1:5501");
+      console.log('12', JSON.parse(localStorage.getItem("giftsInCart")));
+    }
+    function findbyId(id) {
+
+    }
+    function doExchange() {
+      var url = "../js/config.json";
+      var _this = this;
+      $.getJSON(url, function (data) {
+        host = data.host;
+        var formData = [];
+        var m = new Date();
+        var dateString = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " " 
+        + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+        var gifts = JSON.parse(localStorage.getItem("giftsInCart"));
+        for (var i=0; i < gifts.length; i++) {
+          var his = {
+            gift_id: gifts[i].id,
+            user_id: 1,
+            qty: gifts[i].qty,
+            amount: gifts[i].price * gifts[i].qty,
+            time: dateString,
+            address: $("#txtaddress").val(),
+            delivery: $('#txtDelivery').find(":selected").text()
+          }
+          formData.push(his);
+        }
+
+        console.log('datas:',formData)
+        fetch(host + "/Exchange", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(formData),
+        }).then((json) => {
+          if (json.status == 200) {
+            alert("Done");
+          } else {
+            alert(json.status);
+          }
+        });
+      });
+    }
+  </script>
+</body>
+
+</html>

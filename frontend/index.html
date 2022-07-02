@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en" style="overflow:hidden;">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home</title>
+    <link rel="icon" href="/logo.svg">
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link href="./css/pricing.css" rel="stylesheet">
+    <link href="./css/index.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+        html,
+        body,
+        #iframe-container {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <h5 class="my-0 mr-md-auto font-weight-normal"><img src="/logo.svg"
+                style="height: 40px; width:40px; margin:0 10px;" />Points Store</h5>
+        <nav class="my-2 my-md-0 mr-md-3">
+            <a id="btnhome" class="p-2 text-dark" href="#">Home</a>
+            <a id="btndashboard" class="p-2 text-dark" href="#">Dashboard</a>
+            <a id="btnusers" class="p-2 text-dark" href="#">Users</a>
+            <a id="btngift" class="p-2 text-dark" href="#">gifts</a>
+        </nav>
+        <a id="btnlogin" class="btn btn-outline-primary" href="#">Sign in</a>
+        <div class="dropdown open">
+            <a id="menuLogout" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false" href="#">Sign out</a>
+            <div class="dropdown-menu">
+                <h6 class="dropdown-header">a@ait.com</h6>
+                <a id="btnlogout" class="dropdown-item" href="#!">Sign out</a>
+            </div>
+        </div>
+        <div id="btncart" class="btn btn-outline-success" style="margin-left: 20px;" href="#">
+            <img src="./img//cart.png" height="20px">
+            Shopping Cart(<a id="txtCartQty">0</a>)
+        </div>
+    </div>
+
+    <div class="iframe-container" style="margin-top: -15px; height: 100%;">
+        <iframe id="centerFrame" onLoad="iframeLoad()" frameborder="0" height="100%" width="100%"
+            src="./pages/store.html"></iframe>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="./JS/popper.min.js"></script>
+    <script src="./JS/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+
+        isHiden = true;
+        $(".btncart").click(function () {
+            if (isHiden) {
+                console.log('show')
+                $('#sidebar').animate({ right: '0px' }).show();//菜单块向右移动
+            } else {
+                console.log('hide')
+                $('#sidebar').animate({ right: '-800px' }); //菜单块向左移动
+            }
+            isHiden = !isHiden;
+        })
+        var token = localStorage.getItem("token");
+            if (token != undefined && token.length > 0) {
+                var role = localStorage.getItem("role");
+                isLogin(true, role);
+                console.log("token is ", $("#btnLogin"), token);
+
+            } else {
+                isLogin(false, role);
+                console.log("token is null", $("#btnLogin"));
+            }
+        window.onload = function () {
+            var giftsInCart = JSON.parse(localStorage.getItem("giftsInCart"));
+            if (giftsInCart != undefined) {
+                $('#txtCartQty').text(giftsInCart.length)
+                console.log("init:", giftsInCart)
+            }
+           
+
+        };
+        window.addEventListener('message', function (e) {
+            if (e.origin == "http://127.0.0.1:5501") {
+                console.log('cxs:', e)
+                //document.getElementById('centerFrame').style.height = e.data + "px";
+                if (e.data.type == 'cart') {
+                    $('#txtCartQty').text(e.data.data.length)
+                    console.log(e.data.data)
+                }
+                else if (e.data.type == "login") {
+                    isLogin(true, e.data.role);
+
+                }
+            }
+        }, false);
+        function isLogin(isLogin, role) {
+            if (isLogin) {
+                $('#btnlogin').hide();
+                $('#menuLogout').show();
+                if (role == "staff") {
+                    $('#btnusers').show();
+                    $('#btngift').show();
+                } else {
+                    $('#btnusers').hide();
+                    $('#btngift').hide();
+                }
+                var userType = localStorage.getItem("userType");
+                if (userType != undefined && userType.length > 0 && userType == "user") {
+                    $('#btnProfile').text("Ranking");
+                } else {
+                    $('#btnProfile').text("User List");
+                }
+            } else {
+                $('#btnlogin').show();
+                $('#menuLogout').hide();
+            }
+        }
+        function onOpenMenu() {
+            $('.offcanvas-collapse').toggleClass('open')
+        }
+
+        function iframeLoad() {
+            // document.getElementById("centerFrame").height =
+            //     document.getElementById("centerFrame").contentWindow.document.body.scrollHeight;
+        }
+
+        function displayHome() {
+            document.getElementById("centerFrame").src = "./homePage/home.html";
+        }
+
+        function displayCart() {
+
+            document.getElementById("centerFrame").src = "./pages/shoppingcart.html";
+        }
+
+        function displayStore() {
+            document.getElementById("centerFrame").src =
+                "./imagespage/store.html";
+        }
+
+        function onSearch() {
+            document.getElementById("centerFrame").src = "./imagespage/index.html";
+            document.getElementById("centerFrame").height = 750;
+        }
+
+        function Repository() {
+            document.getElementById("centerFrame").src =
+                "InformationPage/InfoPage.html";
+        }
+
+        function aboutUs() {
+            document.getElementById("centerFrame").src = "./imagespage/store.html";
+        }
+
+        function login() {
+            document.getElementById("centerFrame").src = "./loginPage/index.html";
+        }
+
+        function onProfile() {
+
+            var userType = localStorage.getItem("userType");
+            if (userType != undefined && userType.length > 0 && userType == "user") {
+                document.getElementById("centerFrame").src = "./rankingpage/index.html";
+            } else {
+                console.log("imagespage")
+                document.getElementById("centerFrame").src = "./userList.html";
+                console.log("url:", document.getElementById("centerFrame").src)
+            }
+
+        }
+
+        function onLogout() {
+            localStorage.setItem("token", "");
+            localStorage.setItem("userType", "user");
+            isLogin(false);
+            document.getElementById("centerFrame").src = "./pages/store.html";
+        }
+        $(document).ready(function () {
+            $(document).on("click", '#btnhome', function () { document.getElementById("centerFrame").src = "./pages/store.html"; });
+            $(document).on("click", '#btndashboard', function () { document.getElementById("centerFrame").src = "./pages/dashboard.html"; });
+            $(document).on("click", '#btnusers', function () { document.getElementById("centerFrame").src = "./pages/userlist.html"; });
+            $(document).on("click", '#btngift', function () { document.getElementById("centerFrame").src = "./pages/giftlist.html"; });
+            $(document).on("click", '#btnlogin', function () { document.getElementById("centerFrame").src = "./pages/login.html"; });
+            $(document).on("click", '#btnlogout', function () { onLogout()});
+            $(document).on("click", '#btncart', function () { displayCart(); });
+
+            // $('#tab a').click(function (e) {
+            //     e.preventDefault();
+            //    $(this).tab('show');
+            // });
+        });
+
+    </script>
+
+</body>
+
+</html>

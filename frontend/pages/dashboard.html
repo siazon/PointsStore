@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" style="">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Home</title>
+
+  <link href="../css/floating-labels.css" rel="stylesheet">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    .btncart {
+      position: fixed;
+      bottom: 0px;
+      right: 0px;
+      height: 90px;
+      width: 90px;
+      background-image: url(./img/cart.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-origin: content-box;
+      margin-bottom: 20px;
+      margin-right: 20px;
+      font-size: 30px;
+      text-align: center;
+      border: solid #e0e0e0 1px;
+      border-radius: 15px;
+      box-shadow: 7px 7px 7px 0 gray;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .btncart div {
+      margin-top: 10px;
+      color: #22a4f1;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="h-100 h-custom">
+    <div class="container h-100 py-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 6px; padding: 20px;">
+            <div class="card-body p-2">
+
+              <div class="row">
+                <div class="col-md-6 col-lg-4 col-xl-3 mb-4 mb-md-0">
+                  <div class="d-flex flex-row pb-3">
+                    <div class="d-flex align-items-center pe-2">
+                      <p class="mb-2" style="font-weight:bold">Summary</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 col-xl-6">
+                  <div class="d-flex justify-content-between" style="font-weight: 500;">
+                    <p id="txtEmail" class="mb-2"></p>
+                  </div>
+                </div>
+
+                <div class="col-lg-4 col-xl-3">
+                  <div class="d-flex justify-content-between" style="font-weight: 500;">
+                    <p class="mb-2">Points Left:</p>
+                    <p id="txtPoints" class="mb-2">2349</p>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          <br>
+          <br>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th scope="col" class="h5">Exchange History</th>
+                  <th scope="col">Format</th>
+                  <th scope="col">Quantity</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">
+                    <div class="d-flex align-items-center">
+                      <img src="../img/toy.png" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+                      <div class="flex-column ms-4">
+                        <p class="mb-2">Thinking, Fast and Slow</p>
+                        <p class="mb-0">Daniel Kahneman</p>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">Digital</p>
+                  </td>
+                  <td class="align-middle">
+                    <div class="d-flex flex-row">
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                      </button>
+
+                      <input id="form1" min="0" name="quantity" value="2" type="number"
+                        class="form-control form-control-sm" style="width: 50px;" />
+
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                  </td>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <div class="d-flex align-items-center">
+                      <img src="../img/toy.png" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+                      <div class="flex-column ms-4">
+                        <p class="mb-2">Thinking, Fast and Slow</p>
+                        <p class="mb-0">Daniel Kahneman</p>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">Digital</p>
+                  </td>
+                  <td class="align-middle">
+                    <div class="d-flex flex-row">
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                      </button>
+
+                      <input id="form1" min="0" name="quantity" value="2" type="number"
+                        class="form-control form-control-sm" style="width: 50px;" />
+
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                  </td>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">
+                    <div class="d-flex align-items-center">
+                      <img src="../img/toy.png" class="img-fluid rounded-3" style="width: 120px;" alt="Book">
+                      <div class="flex-column ms-4">
+                        <p class="mb-2">Thinking, Fast and Slow</p>
+                        <p class="mb-0">Daniel Kahneman</p>
+                      </div>
+                    </div>
+                  </th>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">Digital</p>
+                  </td>
+                  <td class="align-middle">
+                    <div class="d-flex flex-row">
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                        <i class="fas fa-minus"></i>
+                      </button>
+
+                      <input id="form1" min="0" name="quantity" value="2" type="number"
+                        class="form-control form-control-sm" style="width: 50px;" />
+
+                      <button class="btn btn-link px-2"
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                        <i class="fas fa-plus"></i>
+                      </button>
+                    </div>
+                  </td>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                  </td>
+                  <td class="align-middle">
+                    <p class="mb-0" style="font-weight: 500;">$9.99</p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div style="height: 70px; "></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+  <script>
+    var userName = localStorage.getItem("username");
+    var points = localStorage.getItem("points");
+    $("#txtEmail").text(userName);
+    $("#txtPoints").text(points);
+
+    getFileList();
+    function getFileList() {
+
+      var url = "../js/config.json";
+      var _this = this;
+      $.getJSON(url, function (data) {
+        host = data.host;
+        var formData={email:userName};
+        fetch(host + "/GetExInfo", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8",
+          },
+          body: JSON.stringify(formData),
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            console.log(json)
+          });
+      });
+    }
+
+
+  </script>
+</body>
+
+</html>
