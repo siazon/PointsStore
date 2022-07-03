@@ -359,7 +359,7 @@
             gifts = data;
             var h = document.body.scrollHeight;
             var data = { type: 'height', h: h, }
-            window.parent.postMessage(data, "http://127.0.0.1:5501");
+            window.parent.postMessage(data, "*");
         }
         function doExchange(e) {
             let gift_id = $(e).data('gift');
@@ -371,7 +371,7 @@
                     addCart(giftsInCart, gifts[i])
 
                     var data = { type: 'cart', data: JSON.parse(localStorage.getItem("giftsInCart")), }
-                    window.parent.postMessage(data, "http://127.0.0.1:5501");
+                    window.parent.postMessage(data, "*");
                     console.log('12', JSON.parse(localStorage.getItem("giftsInCart")));
                 }
             }

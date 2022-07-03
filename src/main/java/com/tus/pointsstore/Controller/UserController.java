@@ -57,10 +57,10 @@ public class UserController {
             }
 
             // Create User Roles. Every admin will have the email extension - "garbagesorting.com".
-            if (user.getUser_email().contains("garbagesorting.com")) {
-                user.setUser_role("admin");
+            if (user.getUser_email().contains("ait.ie")) {
+                user.setUser_role("staff");
             } else {
-                user.setUser_role("player");
+                user.setUser_role("user");
             }
         }
         if (!isExist) {
@@ -73,6 +73,18 @@ public class UserController {
             map.put("state", false);
             map.put("msg", "Email address already exists");
         }
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
+    // Update a new user
+    @PostMapping("/UpdateUser")
+    public Object update(@RequestBody User user) {
+        Map<String, Object> map = new HashMap<>();
+
+        // if email doesn't already exist, add user
+        userMapper.update(user);
+        map.put("state", true);
+        map.put("msg", "Sign up successfully");
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 

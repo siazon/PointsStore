@@ -36,8 +36,8 @@ public class UserService implements UserMapper {
     @Override
     public int update(User user) {
         return jdbcTemplate.update(
-                "update tb_user set user_name = ? where user_email = ?",
-                user.getUser_name(), user.getUser_email());
+                "update tb_user set user_name=?,user_email=?,user_phone=?,user_password=?,points=? where id=?",
+                user.getUser_name(), user.getUser_email(), user.getUser_phone(), user.getUser_password(), user.getpoints(), user.getId());
     }
 
     @Override

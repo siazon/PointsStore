@@ -107,6 +107,7 @@
       var table = $("#tb_user").DataTable();
       var selectRow = table.row($(e).parents("tr").data("index")).data();
       var data = {
+        id: $(e).parents("tr").data("row-id"),
         user_name: selectRow[0],
         user_email: selectRow[1],
         user_phone: selectRow[2],

@@ -195,7 +195,7 @@
                 localStorage.setItem("points", json.points);
                 localStorage.setItem("username", username);
                 localStorage.setItem("user_id", json.user_id);
-                var data = { type: 'login',role:json.role }
+                var data = { type: 'login', role: json.role }
                 window.parent.postMessage(data, '*');
                 if (username.indexOf("garbagesorting") != -1) {
                   localStorage.setItem("userType", "staff");
@@ -267,6 +267,9 @@
                 alert("Sign up successful. please Sign in");
                 $("#loginEmail").val(username)
                 $('.cxstab_con .cxsitem').eq(0).show().siblings().hide();
+                $("#signupEmail").val('');
+                $("#signupPassword").val('');
+                $("#signupPassword1").val('');
               } else {
                 alert(json.msg);
               }

@@ -159,11 +159,11 @@
     };
     function refreshData() {
       $("#tableLine").empty();
-      var giftsInCart = JSON.parse(localStorage.getItem("giftsInCart"));
-      console.log(giftsInCart)
+
+      var cart = localStorage.getItem("giftsInCart");
+
       let len = 0;
-      if (giftsInCart != null) len = giftsInCart.length;
-      $("#aItem").text(len);
+
       var $title = $(
         " <div class='d-flex justify-content-between align-items-center mb-5'>" +
         "<h1 class='fw-bold mb-0 text-black'>Shopping Cart</h1>" +
@@ -172,6 +172,10 @@
         "<hr class='my-4'>"
       );
       $title.appendTo("#tableLine");
+      if (cart == undefined) return;
+      var giftsInCart = JSON.parse(cart);
+      len = giftsInCart.length;
+      $("#aItem").text(len);
       let totalPrice = 0;
       for (var i = 0; i < giftsInCart.length; i++) {
         totalPrice += giftsInCart[i].amount;
@@ -201,7 +205,7 @@
       $("#totalPrice").text(totalPrice);
       var h = document.body.scrollHeight;
       var data = { type: 'height', h: h, }
-      window.parent.postMessage(data, "http://127.0.0.1:5501");
+      window.parent.postMessage(data, "*");
     }
     function doDelete(e) {
       let gift_id = $(e).data('gift');
@@ -214,24 +218,29 @@
       localStorage.setItem("giftsInCart", JSON.stringify(giftsInCart));
       refreshData();
       var data = { type: 'cart', data: JSON.parse(localStorage.getItem("giftsInCart")), }
-      window.parent.postMessage(data, "http://127.0.0.1:5501");
+      window.parent.postMessage(data, "*");
       console.log('12', JSON.parse(localStorage.getItem("giftsInCart")));
     }
     function findbyId(id) {
 
     }
     function doExchange() {
+      var user_id = localStorage.getItem("user_id");
+      if (user_id == undefined) {
+        alert("Please Sign in first")
+        return;
+      }
       var url = "../js/config.json";
       var _this = this;
       $.getJSON(url, function (data) {
         host = data.host;
         var formData = [];
         var m = new Date();
-        var dateString = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " " 
-        + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
+        var dateString = m.getUTCFullYear() + "/" + (m.getUTCMonth() + 1) + "/" + m.getUTCDate() + " "
+          + m.getUTCHours() + ":" + m.getUTCMinutes() + ":" + m.getUTCSeconds();
         var gifts = JSON.parse(localStorage.getItem("giftsInCart"));
-        var user_id=localStorage.getItem("user_id");
-        for (var i=0; i < gifts.length; i++) {
+        var user_id = localStorage.getItem("user_id");
+        for (var i = 0; i < gifts.length; i++) {
           var his = {
             gift_id: gifts[i].id,
             user_id: user_id,
@@ -244,7 +253,7 @@
           formData.push(his);
         }
 
-        console.log('datas:',formData)
+        console.log('datas:', formData)
         fetch(host + "/Exchange", {
           method: "POST",
           headers: {
@@ -254,6 +263,10 @@
         }).then((json) => {
           if (json.status == 200) {
             alert("Done");
+            localStorage.removeItem("giftsInCart")
+            window.location.href = "../pages/dashboard.html";
+            var data = { type: 'init' }
+            window.parent.postMessage(data, '*');
           } else {
             alert(json.status);
           }
