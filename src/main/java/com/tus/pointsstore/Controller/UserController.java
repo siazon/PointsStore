@@ -127,7 +127,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable int id) {
 //        if (userMapper.findById(id).isEmpty()) {
 //            throw new NotFoundException("Patient with ID " + patientId + " does not exist.");
