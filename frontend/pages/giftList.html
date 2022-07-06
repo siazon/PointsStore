@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="overflow:hidden;">
+<html lang="en" style="">
 
 <head>
   <meta charset="UTF-8" />
@@ -14,53 +14,136 @@
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <script src="http://code.jquery.com/jquery-1.12.1.min.js"></script>
   <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
+
 </head>
 
 <body>
-  <section class="h-100 h-custom" style="width: 800px;">
-    <div class="container h-100 py-5">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col">
-          <h2>Gifts List</h2>
+  <section class="h-100 h-custom" style="background-color: #fff">
+    <div class="container py-5 h-100">
+      <div class="col-12">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+          <div class="col">
+            <h2>Gift List</h2>
 
-          <div class="input-group mb-3">
-            <span class="input-space">
-              <button type="button" class="btn btn-primary ubtn" onclick="doAdd()">
-                Add
-              </button>
-            </span>
+            <div class="input-group mb-3">
+              <span class="input-space">
+                <button type="button" class="btn btn-primary ubtn" onclick="doAdd()">
+                  Add
+                </button>
+              </span>
 
-            <div class="input-group-append">
-              <button class="btn btn-outline-secondary" type="button">Refresh</button>
             </div>
-          </div>
-          <div class="table-responsive">
-            <table class="table table-striped table-hover" id="tb_user" >
-              <thead class="thead-dark">
-                <tr>
-                  <th>Name</th>
-                  <th>Email</th>
-                  <th>Phone</th>
-                  <th>Password</th>
-                  <th>Role</th>
-                  <th>Edit</th>
-                </tr>
-              </thead>
-              <tbody id="rows"></tbody>
-            </table>
-          </div>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover" id="tb_user">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Name</th>
+                    <th>Info</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Pic</th>
+                    <th>Edit</th>
+                  </tr>
+                </thead>
+                <tbody id="rows"></tbody>
+              </table>
+            </div>
 
+          </div>
         </div>
       </div>
     </div>
   </section>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.21/js/jquery.dataTables.min.js"></script>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
     crossorigin="anonymous"></script>
+  <script>
+    QueryList();
+    function QueryList() {
+      var url = "../js/config.json";
+      $.getJSON(url, function (data) {
+        var host = data.host;
+        fetch(host + "/AllGifts", {
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((json) => {
 
+            mydata = json;
+            $("#rows").empty();
+            for (var i = 0; i < mydata.length; i++) {
+              var $trTemp = $(
+                "<tr data-index=" +
+                i +
+                " data-row-id=" +
+                mydata[i].id +
+                "></tr>"
+              );
+              $trTemp.append("<td>" + mydata[i].name + "</td>");
+              $trTemp.append("<td>" + mydata[i].info + "</td>");
+              $trTemp.append("<td>" + mydata[i].price + "</td>");
+              $trTemp.append("<td>" + mydata[i].stock + "</td>");
+              $trTemp.append("<td>" + mydata[i].pic + "</td>");
+              $trTemp.append(
+                "<td> <button type='button' class = 'btn btn-success' onclick='doEdit(this)'> Edit </button> " +
+                "<button type = 'button' class = 'btn btn-danger' onclick='doDelete(this)'> Delete </button>  </td>"
+              );
+              $trTemp.appendTo("#tb_user");
+            }
+          });
+      });
+    }
+
+    function doAdd() {
+      window.location.href = "useredit.html";
+    }
+
+    function doEdit(e) {
+      var table = $("#tb_user").DataTable();
+      var selectRow = table.row($(e).parents("tr").data("index")).data();
+      var data = {
+        id: $(e).parents("tr").data("row-id"),
+        name: selectRow[0],
+        info: selectRow[1],
+        price: selectRow[2],
+        stock: selectRow[3],
+        pic: selectRow[4],
+      };
+      window.location.href = generateUrlWithParams("giftedit.html", data);
+    }
+
+    function generateUrlWithParams(url, params) {
+      var urlParams = [];
+      for (var key in params) {
+        if (params[key]) {
+          urlParams.push(`${key}=${params[key]}`);
+        }
+      }
+      url += "?" + urlParams.join("&");
+      return url;
+    }
+
+    function doDelete(e) {
+      $(e).parents("tr").remove();
+      var user_id = $(e).parents("tr").data("row-id");
+      var url = "../js/config.json";
+      $.getJSON(url, function (data) {
+        var host = data.host;
+        fetch(host + "/deleteGift/" + user_id, {
+          method: "DELETE",
+        })
+          .then((response) => response.json())
+          .then((json) => {
+            mydata = json;
+            alert(json.msg)
+          });
+      });
+
+    }
+  </script>
 </body>
 
 </html>

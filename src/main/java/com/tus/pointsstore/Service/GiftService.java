@@ -36,8 +36,8 @@ public class GiftService implements GiftMapper {
     @Override
     public int update(Gift gift) {
         return jdbcTemplate.update(
-                "update tb_gifts set name = ? where id = ?",
-                gift.getName(), gift.getId());
+                "update tb_gifts set name = ?,info=?,price=?,stock=?,pic=? where id = ?",
+                gift.getName(), gift.getInfo(), gift.getPrice(), gift.getStock(), gift.getPic(), gift.getId());
     }
 
     @Override

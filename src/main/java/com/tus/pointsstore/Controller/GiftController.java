@@ -50,6 +50,19 @@ public class GiftController {
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 
+    @PostMapping("/UpdateGift")
+    public Object update(@RequestBody Gift user) {
+        Map<String, Object> map = new HashMap<>();
+        // Check if user email is already in use
+
+        // if email doesn't already exist, add user
+        giftMapper.update(user);
+        map.put("state", true);
+        map.put("msg", "Sign up successfully");
+
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
     @DeleteMapping("/deleteGift/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
 //        if (userMapper.findById(id).isEmpty()) {

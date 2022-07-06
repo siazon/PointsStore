@@ -9,7 +9,6 @@
         .input-space {
             padding-right: 15px;
         }
-        
         .hide{visibility: hidden;}
     </style>
 </head>
@@ -22,34 +21,30 @@
 
                 <form id="formSubmit">
                     <input type="text" class="form-control hide" id="id" name="id"
-                    placeholder="Email" />
+                     />
                     <div class="form-group">
-                        <label for="user_email">Email address</label>
-                        <input type="email" class="form-control" id="user_email" name="user_email"
-                            placeholder="Email" />
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name" name="name"
+                            placeholder="Name" />
                     </div>
                     <div class="form-group">
-                        <label for="user_password">Password</label>
-                        <input type="password" class="form-control" id="user_password" name="user_password"
-                            placeholder="Password" />
+                        <label for="info">Info</label>
+                        <input type="text" class="form-control" id="info" name="info"
+                            placeholder="Info" />
                     </div>
                     <div class="form-group">
-                        <label for="user_name">Name</label>
-                        <input type="text" class="form-control" id="user_name" name="user_name"
-                            placeholder="UserName" />
+                        <label for="price">Price</label>
+                        <input type="text" class="form-control" id="price" name="price"
+                            placeholder="Price" />
                     </div>
                     <div class="form-group">
-                        <label for="user_phone">Phone</label>
-                        <input type="text" class="form-control" id="user_phone" name="user_phone" placeholder="Phone" />
+                        <label for="stock">Stock</label>
+                        <input type="text" class="form-control" id="stock" name="stock" placeholder="Stock" />
                     </div>
                     <div class="form-group">
-                        <label for="user_role">user_role</label>
-                        <input type="text" readonly class="form-control" id="user_role" name="user_role"
-                            placeholder="user_role" />
-                    </div>
-                    <div class="form-group">
-                        <label for="points">points</label>
-                        <input type="text" class="form-control" id="points" name="points" placeholder="points" />
+                        <label for="pic">Picture</label>
+                        <input type="text" readonly class="form-control" id="pic" name="pic"
+                            placeholder="Picture" />
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -61,14 +56,13 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         $("#id").val(urlParams.get("id"));
-        $("#user_name").val(urlParams.get("user_name"));
-        $("#user_email").val(urlParams.get("user_email"));
-        $("#user_phone").val(urlParams.get("user_phone"));
-        $("#user_password").val(urlParams.get("user_password"));
-        $("#user_role").val(urlParams.get("user_role"));
-        $("#points").val(urlParams.get("points"));
+        $("#name").val(urlParams.get("name"));
+        $("#info").val(urlParams.get("info"));
+        $("#price").val(urlParams.get("price"));
+        $("#stock").val(urlParams.get("stock"));
+        $("#pic").val(urlParams.get("pic"));
         let isEdit = false;
-        if (urlParams.get("user_email") != null) isEdit = true;
+        if (urlParams.get("name") != null) isEdit = true;
         console.log("edit:", isEdit);
 
         //form submit
@@ -76,9 +70,9 @@
             var $form = $("#formSubmit");
             var formData = getFormData($form);
             console.log('formData:',formData); 
-            var CMD="/InsertUser";
+            var CMD="/InsertGift";
             if (isEdit) {
-                CMD="/UpdateUser";
+                CMD="/UpdateGift";
             }
             var url = "/js/config.json";
             $.getJSON(url, function (data) {
@@ -92,7 +86,7 @@
                 }).then((json) => {
                     if (json.status == 200) {
                         alert("Done");
-                        window.location.href = "userlist.html";
+                        window.location.href = "giftlist.html";
                     } else {
                         alert(json.status);
                     }
