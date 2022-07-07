@@ -4,7 +4,7 @@
 
 # API
 
-## Token generate
+## JWT Token generate
 
 ```
 Token= HMAC256(user_id+user_name+Current date+A Private Key String);
