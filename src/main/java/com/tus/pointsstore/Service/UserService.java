@@ -21,6 +21,12 @@ public class UserService implements UserMapper {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * create a new user
+     *
+     * @param user
+     * @return
+     */
     @Override
     public User insert(User user) {
         jdbcTemplate.update(
@@ -33,6 +39,12 @@ public class UserService implements UserMapper {
 
     }
 
+    /**
+     * update user
+     *
+     * @param user
+     * @return the number of succese
+     */
     @Override
     public int update(User user) {
         return jdbcTemplate.update(
@@ -40,11 +52,23 @@ public class UserService implements UserMapper {
                 user.getUser_name(), user.getUser_email(), user.getUser_phone(), user.getUser_password(), user.getpoints(), user.getId());
     }
 
+    /**
+     * delete user by id
+     *
+     * @param id
+     * @return
+     */
     @Override
     public int deleteById(int id) {
         return jdbcTemplate.update("DELETE FROM tb_user WHERE id=?", id);
     }
 
+    /**
+     * get user by id
+     *
+     * @param id
+     * @return user entity
+     */
     @Override
     public User findById(int id) {
 
@@ -62,6 +86,12 @@ public class UserService implements UserMapper {
 
     }
 
+    /**
+     * find by Email
+     *
+     * @param email
+     * @return user entity
+     */
     @Override
     public User findByEmail(String email) {
 
@@ -79,6 +109,11 @@ public class UserService implements UserMapper {
 
     }
 
+    /**
+     * fileAll
+     *
+     * @return user list
+     */
     @Override
     public List<User> findAll() {
         return jdbcTemplate.query(

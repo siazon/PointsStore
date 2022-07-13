@@ -29,7 +29,57 @@ class ExchangeControllerTest {
     Exchange_his his = new Exchange_his(1, 1, 1, 1, 3, "", "", "");
 
     @Test
-    void exchange() throws Exception {
+    void testfindAll() throws Exception {
+        //Mockito.when(exchangeMapper.exchange(his)).thenReturn(true);
+
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(his);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/AllHis"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("")));
+    }
+
+    @Test
+    void testExchange_his() throws Exception {
+        //Mockito.when(exchangeMapper.exchange(his)).thenReturn(true);
+
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(his);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/GetHis/" + 1))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("")));
+    }
+
+    @Test
+    void testinsert() throws Exception {
+        //Mockito.when(exchangeMapper.exchange(his)).thenReturn(true);
+
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        String requestJson = ow.writeValueAsString(his);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .post("/InsertHis")
+                        .contentType(MediaType.APPLICATION_JSON).content(requestJson))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", is("")));
+    }
+
+    @Test
+    void testDelete() throws Exception {
+        //Mockito.when(exchangeMapper.exchange(his)).thenReturn(true);
+
+        ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/deleteHis/" + 1))
+                .andExpect(status().isOk())
+                //.andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$", is("")));
+    }
+
+    @Test
+    void testexchange() throws Exception {
         //Mockito.when(exchangeMapper.exchange(his)).thenReturn(true);
 
         ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();

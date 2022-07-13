@@ -91,9 +91,8 @@
                 console.log("token is null", $("#btnLogin"));
             }
         }
-        function refreshCart()
-        {
-        
+        function refreshCart() {
+
             var cart = localStorage.getItem("giftsInCart");
             if (cart != undefined) {
 
@@ -104,7 +103,7 @@
                 }
             }
             else
-            $('#txtCartQty').text(0)
+                $('#txtCartQty').text(0)
         }
         window.onload = function () {
             refreshCart();
@@ -201,7 +200,7 @@
         }
 
         function onLogout() {
-            
+
             localStorage.removeItem("token")
             localStorage.removeItem("userType")
             localStorage.removeItem("role")
@@ -214,7 +213,15 @@
         }
         $(document).ready(function () {
             $(document).on("click", '#btnhome', function () { document.getElementById("centerFrame").src = "./pages/store.html"; });
-            $(document).on("click", '#btndashboard', function () { document.getElementById("centerFrame").src = "./pages/dashboard.html"; });
+            $(document).on("click", '#btndashboard', function () {
+                var token = localStorage.getItem("token");
+                if (token != undefined && token.length > 0) {
+                    document.getElementById("centerFrame").src = "./pages/dashboard.html";
+                } else {
+                    alert("Please Login first");
+                    document.getElementById("centerFrame").src = "./pages/login.html";
+                }
+            });
             $(document).on("click", '#btnusers', function () { document.getElementById("centerFrame").src = "./pages/userlist.html"; });
             $(document).on("click", '#btngift', function () { document.getElementById("centerFrame").src = "./pages/giftlist.html"; });
             $(document).on("click", '#btnlogin', function () { document.getElementById("centerFrame").src = "./pages/login.html"; });

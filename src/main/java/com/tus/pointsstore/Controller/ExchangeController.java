@@ -30,17 +30,10 @@ public class ExchangeController {
     @Autowired
     private GiftMapper giftMapper;
 
-    @GetMapping("/AllHis")
-    public ResponseEntity<List<Exchange_his>> findAll() {
-        List<Exchange_his> list = exchangeMapper.findAll();
-        return new ResponseEntity<List<Exchange_his>>(list, HttpStatus.OK);
-    }
 
     @GetMapping("/GetHis/{id}")
     public Exchange_his getUserById(@PathVariable int id) throws NotFoundException {
         return exchangeMapper.findById(id);
-//                if (userMapper.findById(id) != null) {
-//                    throw new NotFoundException("User with Id " + id + " does not exist.");
     }
 
     @PostMapping("/GetExInfo")
@@ -50,7 +43,7 @@ public class ExchangeController {
         String[] strings = s.split(":");
         System.out.println(strings[1]);
 
-        List<Exchange_info> infos = exchangeMapper.findAllInfo(strings[1]);
+        var infos = exchangeMapper.findAllInfo(strings[1]);
         return infos;
 
     }
@@ -72,29 +65,18 @@ public class ExchangeController {
     @PostMapping("/Exchange")
     public Object Exchange(@RequestBody List<Exchange_his> his) {
         Map<String, Object> map = new HashMap<>();
-
-        //check if have enough stock
-//        Gift gift = giftMapper.findById(his.getGift_id());
-//        if (gift != null && gift.getStock() > his.getQty()) {
-//            int amount = his.getQty() * gift.getPrice();
-//            //check if have enough points
-//            User user = userMapper.findById(his.getUser_id());
-//            if (user != null && user.getpoints() > amount) {
-//
-//            } else {
-//                map.put("state", false);
-//                map.put("msg", "Insufficient number of points");
-//            }
-//        } else {
-//            map.put("state", false);
-//            map.put("msg", "Inventory shortage");
-//        }
-        // if email doesn't already exist, add user
-
         try {
-            exchangeMapper.exchange(his);
-            map.put("state", true);
-            map.put("msg", "Exchange successfully");
+            int res = exchangeMapper.exchange(his);
+            if (res >= 3) {
+                map.put("state", true);
+                map.put("msg", "Exchange successfully");
+            } else if (res == -1) {
+                map.put("state", false);
+                map.put("msg", "Your points balance is not enough");
+            } else {
+                map.put("state", false);
+                map.put("msg", "Exchange Error");
+            }
         } catch (Exception ex) {
             map.put("state", false);
             map.put("msg", "Exchange Error");
@@ -103,10 +85,7 @@ public class ExchangeController {
     }
 
     @DeleteMapping("/deleteHis/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable int id) {
-//        if (userMapper.findById(id).isEmpty()) {
-//            throw new NotFoundException("Patient with ID " + patientId + " does not exist.");
-//        }
+    public ResponseEntity<String> deleteHis(@PathVariable int id) {
         exchangeMapper.deleteById(id);
         return new ResponseEntity<>("User with id " + id + " deleted", HttpStatus.OK);
 

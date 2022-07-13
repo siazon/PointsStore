@@ -21,6 +21,12 @@ public class GiftService implements GiftMapper {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * create a new gift
+     *
+     * @param gift
+     * @return
+     */
     @Override
     public Gift insert(Gift gift) {
         jdbcTemplate.update(
@@ -33,6 +39,12 @@ public class GiftService implements GiftMapper {
 
     }
 
+    /**
+     * update the gift
+     *
+     * @param gift entity
+     * @return
+     */
     @Override
     public int update(Gift gift) {
         return jdbcTemplate.update(
@@ -40,11 +52,23 @@ public class GiftService implements GiftMapper {
                 gift.getName(), gift.getInfo(), gift.getPrice(), gift.getStock(), gift.getPic(), gift.getId());
     }
 
+    /**
+     * delete gift
+     *
+     * @param id
+     * @return
+     */
     @Override
     public int deleteById(int id) {
         return jdbcTemplate.update("DELETE FROM tb_gifts WHERE id=?", id);
     }
 
+    /**
+     * find id
+     *
+     * @param id
+     * @return
+     */
     @Override
     public Gift findById(int id) {
 
@@ -61,7 +85,11 @@ public class GiftService implements GiftMapper {
 
     }
 
-
+    /**
+     * find gifts list
+     *
+     * @return gift list
+     */
     @Override
     public List<Gift> findAll() {
         return jdbcTemplate.query(

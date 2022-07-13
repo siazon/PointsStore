@@ -32,8 +32,6 @@ public class GiftController {
     @GetMapping("/GetGift/{id}")
     public Gift getUserById(@PathVariable int id) throws NotFoundException {
         return giftMapper.findById(id);
-//                if (userMapper.findById(id) != null) {
-//                    throw new NotFoundException("User with Id " + id + " does not exist.");
     }
 
 
@@ -65,9 +63,6 @@ public class GiftController {
 
     @DeleteMapping("/deleteGift/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable int id) {
-//        if (userMapper.findById(id).isEmpty()) {
-//            throw new NotFoundException("Patient with ID " + patientId + " does not exist.");
-//        }
         giftMapper.deleteById(id);
         return new ResponseEntity<>("User with id " + id + " deleted", HttpStatus.OK);
 

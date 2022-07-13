@@ -44,6 +44,11 @@
     td p {
       margin: 0 20px;
     }
+
+    .btnStaff {
+      border: solid #e8e8e8 1px;
+      margin: 50px;
+    }
   </style>
 </head>
 
@@ -51,6 +56,16 @@
   <section class="h-100 h-custom">
     <div class="container h-100 py-5">
       <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-md-4 btnStaff">
+          <h2>Gift management</h2>
+          <p>View and edit the gift stock, price and detail</p>
+          <p><a id="btnGift" class="btn btn-success" role="button">View gifts &raquo;</a></p>
+        </div>
+        <div class="col-md-4 btnStaff">
+          <h2>point management</h2>
+          <p>View customer's points balance</p>
+          <p><a id="btnUser" class="btn btn-success" role="button">View users &raquo;</a></p>
+        </div>
         <div class="col">
           <div class="card shadow-2-strong mb-5 mb-lg-0" style="border-radius: 6px; padding: 20px;">
             <div class="card-body p-2">
@@ -71,7 +86,7 @@
                 </div>
                 <div class="col-md-6 col-lg-4 col-xl-3">
                   <div class="d-flex justify-content-between" style="font-weight: 500;">
-                 
+
                     <p id="efe" class="mb-2">History: <a id="txtHisQty"></a></p>
                   </div>
                 </div>
@@ -140,6 +155,15 @@
     var points = localStorage.getItem("points");
     $("#txtEmail").text(userName);
     $("#txtPoints").text(points);
+    var userRole = localStorage.getItem("role");
+    if (userRole != undefined && userRole.length > 0 && userRole == "user") {
+      console.log("user")
+      $('.btnStaff').hide();
+    }else{
+      console.log("staff")
+      $('.btnStaff').show();
+
+    }
 
     getFileList();
     function getFileList() {
@@ -169,31 +193,36 @@
     }
     function refreshList(infos) {
       $("#tbInfos").empty();
+      console.log(infos)
       for (var i = 0; i < infos.length; i++) {
         var $trTemp = $(
           "<tr><th scope='row'>" +
           "<div class='d-flex align-items-center'>" +
           "<img src='../img/" + infos[i].pic + "' class='img-fluid rounded-3' style='width: 120px;' alt='Book'>" +
           "<div class='flex-column ms-4'>" +
-          "<p class='mb-2'>"+infos[i].name+"</p>" +
-          "<p class='mb-0'>"+infos[i].info+"</p>" +
+          "<p class='mb-2'>" + infos[i].name + "</p>" +
+          "<p class='mb-0'>" + infos[i].info + "</p>" +
           "</div> </div></th>" +
           "<td class='align-middle'>" +
-          " <p class='mb-0' style='font-weight: 500;'>"+infos[i].qty+"</p>" +
+          " <p class='mb-0' style='font-weight: 500;'>" + infos[i].qty + "</p>" +
           "  </td><td class='align-middle'>" +
-          "<p class='mb-0' style='font-weight: 500;'>"+infos[i].amount+"</p>" +
+          "<p class='mb-0' style='font-weight: 500;'>" + infos[i].amount + "</p>" +
           " </td><td class='align-middle'>" +
-          " <p class='mb-0' style='font-weight: 500;'>"+infos[i].delivery+"</p>" +
+          " <p class='mb-0' style='font-weight: 500;'>" + infos[i].delivery + "</p>" +
           " </td><td class='align-middle'>" +
-          "<p class='mb-0' style='font-weight: 500;'>"+infos[i].address+"</p>" +
+          "<p class='mb-0' style='font-weight: 500;'>" + infos[i].address + "</p>" +
           " </td><td class='align-middle'>" +
-          "<p class='mb-0' style='font-weight: 500;'>"+infos[i].time+"</p>" +
+          "<p class='mb-0' style='font-weight: 500;'>" + infos[i].time + "</p>" +
           " </td></tr>"
         );
         $trTemp.appendTo("#tbInfos");
       }
     }
+    $(document).ready(function () {
+      $(document).on("click", '#btnUser', function () { window.location.href = "userlist.html"; });
+      $(document).on("click", '#btnGift', function () { window.location.href = "giftlist.html"; });
 
+    });
 
   </script>
 </body>

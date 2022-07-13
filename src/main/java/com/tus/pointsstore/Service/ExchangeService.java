@@ -3,6 +3,7 @@ package com.tus.pointsstore.Service;
 import com.tus.pointsstore.Mapper.ExchangeMapper;
 import com.tus.pointsstore.Model.Exchange_his;
 import com.tus.pointsstore.Model.Exchange_info;
+import com.tus.pointsstore.Model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -23,6 +24,12 @@ public class ExchangeService implements ExchangeMapper {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * create a new history
+     *
+     * @param exchange_his
+     * @return
+     */
     @Override
     public boolean insert(Exchange_his exchange_his) {
         int res = jdbcTemplate.update(
@@ -35,11 +42,38 @@ public class ExchangeService implements ExchangeMapper {
 
     }
 
+    /**
+     * transactional processing
+     *
+     * @param exchange_his
+     * @return
+     */
     @Override
     @Transactional
-    public boolean exchange(List<Exchange_his> exchange_his) {
+    public int exchange(List<Exchange_his> exchange_his) {
         int res = 0;
+        int totalpoint = 0;
+        int user_id = 0;
         for (Exchange_his his : exchange_his) {
+            user_id = his.getUser_id();
+            totalpoint += his.getAmount();
+        }
+        User user = jdbcTemplate.queryForObject("SELECT * FROM tb_user WHERE id=?", new Object[]{user_id}, (rs, rowNum) ->
+                new User(
+                        rs.getInt("id"),
+                        rs.getString("user_email"),
+                        rs.getString("user_name"),
+                        rs.getString("user_phone"),
+                        rs.getString("user_password"),
+                        rs.getString("user_role"),
+                        rs.getInt("points")
+
+                ));
+        if (user.getpoints() < totalpoint) {
+            return -1;
+        }
+        for (Exchange_his his : exchange_his) {
+
             res = jdbcTemplate.update(
                     "UPDATE tb_user set points=points-? where id=? ;",
                     his.getAmount(), his.getUser_id());
@@ -54,9 +88,15 @@ public class ExchangeService implements ExchangeMapper {
                     his.getGift_id(), his.getUser_id(), his.getQty(), his.getAmount(), his.getTime(),
                     his.getAddress(), his.getDelivery());
         }
-        return res >= 3;
+        return res;
     }
 
+    /**
+     * update the his
+     *
+     * @param exchange_his
+     * @return
+     */
     @Override
     public int update(Exchange_his exchange_his) {
         return jdbcTemplate.update(
@@ -64,11 +104,23 @@ public class ExchangeService implements ExchangeMapper {
                 exchange_his.getGift_id(), exchange_his.getUser_id());
     }
 
+    /**
+     * delete history
+     *
+     * @param id
+     * @return
+     */
     @Override
     public int deleteById(int id) {
         return jdbcTemplate.update("DELETE FROM tb_gifts WHERE id=?", id);
     }
 
+    /**
+     * get his by id
+     *
+     * @param id
+     * @return history entity
+     */
     @Override
     public Exchange_his findById(int id) {
 
@@ -87,6 +139,12 @@ public class ExchangeService implements ExchangeMapper {
 
     }
 
+    /**
+     * get the exchange info form two tables
+     *
+     * @param email
+     * @return
+     */
     @Override
     public List<Exchange_info> findAllInfo(String email) {
         return jdbcTemplate.query(
@@ -104,25 +162,6 @@ public class ExchangeService implements ExchangeMapper {
                                 rs.getString("name"),
                                 rs.getString("info"),
                                 rs.getString("pic")
-                        )
-        );
-    }
-
-    @Override
-    public List<Exchange_his> findAll() {
-        return jdbcTemplate.query(
-                "select * from tb_gifts",
-                (rs, rowNum) ->
-                        new Exchange_his(
-                                rs.getInt("id"),
-                                rs.getInt("gift_id"),
-                                rs.getInt("user_id"),
-                                rs.getInt("qty"),
-                                rs.getInt("amount"),
-                                rs.getString("time"),
-                                rs.getString("address"),
-                                rs.getString("delivery")
-
                         )
         );
     }

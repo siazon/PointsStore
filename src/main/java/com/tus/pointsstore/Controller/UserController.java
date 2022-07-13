@@ -40,8 +40,12 @@ public class UserController {
 //                    throw new NotFoundException("User with Id " + id + " does not exist.");
     }
 
-
-    // Create a new user
+    /**
+     * Create a new user
+     *
+     * @param user
+     * @return
+     */
     @PostMapping("/InsertUser")
     public Object insert(@RequestBody User user) {
         Map<String, Object> map = new HashMap<>();
@@ -88,6 +92,24 @@ public class UserController {
         return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
     }
 
+    // AddPoints
+    @PostMapping("/AddPoints")
+    public Object AddPoints(@RequestBody User user) {
+        Map<String, Object> map = new HashMap<>();
+
+        // if email doesn't already exist, add user
+        userMapper.update(user);
+        map.put("state", true);
+        map.put("msg", "Sign up successfully");
+        return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+    }
+
+    /**
+     * Login
+     *
+     * @param userData
+     * @return
+     */
     @PostMapping("/Login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody LoginUserData userData) {
 
@@ -121,12 +143,18 @@ public class UserController {
             map.put("user_id", userDB.getId());
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         } else {
-            map.put("state", true);
+            map.put("state", false);
             map.put("msg", "Incorrect username or password");// back token
             return new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
         }
     }
 
+    /**
+     * delete user
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable int id) {
 //        if (userMapper.findById(id).isEmpty()) {
